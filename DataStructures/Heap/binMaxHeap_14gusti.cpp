@@ -9,7 +9,7 @@ void Swap(int* a, int* b) {
     *b=t;
 }
 void print(int arr[], int n){
-    cout<<"Binary Max Heap: ";
+    cout<<"Binary Heap: ";
     for (int i = 0; i < n; ++i)    cout << arr[i] << " ";
     cout << endl;
 }
@@ -57,6 +57,71 @@ void merge2Heaps(int merged[], int a[], int b[], int N, int M){
     for (int i = (N+M) / 2 - 1; i >= 0; i--)
         heapify(merged, N+M, i);
 }
+int extractMax(int arr[], int& size) {
+    if (size <= 0) {
+        cout << "Heap is empty." << endl;
+        return -1;
+    }
+
+    int maxVal = arr[0];
+    arr[0] = arr[size - 1];
+    size--;
+
+    // Heapify to maintain the Max Heap property.
+    int i = 0;
+    while (true) {
+        int leftChild = 2 * i + 1;
+        int rightChild = 2 * i + 2;
+        int largest = i;
+
+        if (leftChild < size && arr[leftChild] > arr[largest])
+            largest = leftChild;
+        if (rightChild < size && arr[rightChild] > arr[largest])
+            largest = rightChild;
+
+        if (largest != i) {
+            Swap(&arr[i], &arr[largest]);
+            i = largest;
+        } else {
+            break;
+        }
+    }
+
+    return maxVal;
+}
+
+int getMax(int arr[], int size) {
+    if (size <= 0) {
+        cout << "Heap is empty." << endl;
+        return -1;
+    }
+
+    return arr[0];
+}
+
+void increaseKey(int arr[], int size, int index, int newValue) {
+    if (index < 0 || index >= size) {
+        cout << "Invalid index." << endl;
+        return;
+    }
+
+    if (newValue <= arr[index]) {
+        cout << "New value is not greater than the current value." << endl;
+        return;
+    }
+
+    arr[index] = newValue;
+    while (index > 0) {
+        int parentIndex = (index - 1) / 2;
+        if (arr[index] > arr[parentIndex]) {
+            Swap(&arr[index], &arr[parentIndex]);
+            index = parentIndex;
+        } else {
+            break;
+        }
+    }
+}
+
 int main(){
     int n=5,m=3,l, mrg[n+m],x=0,y;
     int a[n]={10,20,15,30,40};
@@ -65,13 +130,27 @@ int main(){
     //     cin>>y;
     //     insert(a,x,y);
     // } print(a,n);
+
     for(int i=0;i<n;i++)    insert(a,x,a[i]);
     insert(a,n,69);
     print(a,n);
+
     delRoot(a,n);
     print(a,n);
+
+    int maxVal = extractMax(a, n);
+    cout << "Extracted Max Value: " << maxVal << endl;
+    print(a, n);
+
+    int maxValue = getMax(a, n);
+    cout << "Maximum Value in the Heap: " << maxValue << endl;
+
+    increaseKey(a, n, 3, 50);
+    print(a, n);
+
     heapSort(a,n);
     print(a,n);
+
     merge2Heaps(mrg,a,b,n,m);
     print(mrg,n+m);
     return 0;
