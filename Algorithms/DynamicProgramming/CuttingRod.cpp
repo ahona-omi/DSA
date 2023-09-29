@@ -4,6 +4,7 @@ using namespace std;
 
 int dp[1005];
 
+//Unbounded knapsack
 int recursive(int len, vector<int> &prices){
 	if(len==0)	return 0;
 	int ans=INT_MIN;
@@ -22,7 +23,7 @@ int memoisation(int len, vector<int> &prices){
 	int ans=INT_MIN;
 	for(int i=1; i<=prices.size(); ++i){
 		if(len-i>=0)
-			ans=max(ans, prices[i-1] +recursive(len-i, prices));
+			ans=max(ans, prices[i-1] +memoisation(len-i, prices));
 	}
 	return dp[len]=ans;
 }
