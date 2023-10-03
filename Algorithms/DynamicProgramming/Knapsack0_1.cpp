@@ -21,6 +21,23 @@ ll knapSack(int ind, int wtLeft) {
     return dp[ind][wtLeft] = ans;
 }
 
+
+ll knapsackBottomUp(int n, int w, vector<pair<int, int>>& items) {
+    vector<vector<ll>> dp(n + 1, vector<ll>(w + 1, 0));
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= w; j++) {
+            if (items[i - 1].first > j) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - items[i - 1].first] + items[i - 1].second);
+            }
+        }
+    }
+
+    return dp[n][w];
+}
+
 int main() {
     int n, w;
     cin >> n >> w;
@@ -30,7 +47,8 @@ int main() {
     for (int i = 0; i < n; i++)
         cin >> items[i].first >> items[i].second;
 
-    cout << knapSack(n - 1, w) << endl;
+    cout <<"KnapSack:" <<knapSack(n - 1, w) << endl;
+    cout <<"KnapSack(Bottom up):" <<knapsackBottomUp(n, w, items) << endl;
 
     return 0;
 }

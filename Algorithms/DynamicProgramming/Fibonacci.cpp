@@ -20,13 +20,17 @@ int fibonacciDp(int n){
     return dp[n]=fibonacci(n-1)+fibonacci(n-2);
 }
 
-int main(){
-    memset(dp,-1,sizeof(dp));
-	int n;
+int main() {
+    memset(dp, -1, sizeof(dp));
+    int n;
     cin >> n;
-    cout<<fibonacciDp(n)<<endl;
-    //cout<<n<<" th Fibonacci number: "<<fibonacci(n)<<endl;
-	return 0;
+    cout<<n<<" th Fibonacci number: "<<fibonacci(n)<<endl;
+    cout << "Fibonacci series up to " << n << " terms: ";
+    for (int i = 0; i <= n; i++)
+        cout << fibonacciDp(i) << " ";
+    cout << endl;
+
+    return 0;
 }
 
 /*
