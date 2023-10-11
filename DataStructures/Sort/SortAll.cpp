@@ -129,8 +129,8 @@ void merge(int a[], int lb, int mid, int ub){
 void mergeS(int a[], int lb, int ub){
     if(lb<ub){
         int mid=(lb+ub)/2;
-        quickS(a,lb,mid);
-        quickS(a,mid+1,ub);
+        mergeS(a,lb,mid);
+        mergeS(a,mid+1,ub);
         merge(a,lb,mid,ub);
     }
 }
