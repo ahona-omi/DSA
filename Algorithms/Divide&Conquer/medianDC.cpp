@@ -25,20 +25,17 @@ int partition(vector<int>& arr, int left, int right) {
 }
 
 int randomizedSelect(vector<int>& arr, int left, int right, int k) {
-    if (left == right) {
-        return arr[left];
-    }
+    if (left == right)    return arr[left];
 
     int pivotIndex = partition(arr, left, right);
     int pivotRank = pivotIndex - left + 1;
 
-    if (k == pivotRank) {
+    if (k == pivotRank)
         return arr[pivotIndex];
-    } else if (k < pivotRank) {
+    else if (k < pivotRank)
         return randomizedSelect(arr, left, pivotIndex - 1, k);
-    } else {
+    else
         return randomizedSelect(arr, pivotIndex + 1, right, k - pivotRank);
-    }
 }
 
 int findMedian(vector<int>& arr) {
@@ -49,8 +46,6 @@ int findMedian(vector<int>& arr) {
 }
 
 int main() {
-    srand(time(nullptr));
-    
     vector<int> arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
     int median = findMedian(arr);
 

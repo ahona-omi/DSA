@@ -111,9 +111,23 @@ float closest(Point P[], int n) {
 	return closestUtil(P, n); 
 } 
 
-int main() { 
-	Point P[] = {{2, 3}, {12, 30}, {40, 50}, {5, 1}, {12, 10}, {3, 4}};
-	int n = sizeof(P) / sizeof(P[0]); 
-	cout << "The smallest distance is " << closest(P, n); 
-	return 0; 
-} 
+int main() {
+    Point P[] = {{2, 3}, {12, 30}, {40, 50}, {5, 1}, {12, 10}, {3, 4}};
+    int n = sizeof(P) / sizeof(P[0]);
+    cout << "The smallest distance is " << closest(P, n) << endl;
+
+    // Find and print the closest pair of points
+    float minDistance = closest(P, n);
+    cout << "The closest pair of points:" << endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (dist(P[i], P[j]) == minDistance) {
+                cout << "Point 1: (" << P[i].x << ", " << P[i].y << ")" << endl;
+                cout << "Point 2: (" << P[j].x << ", " << P[j].y <<")" << endl;
+            }
+        }
+    }
+
+    return 0;
+}
+

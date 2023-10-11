@@ -2,9 +2,7 @@
 using namespace std;
 
 long long powerMod(long long A, long long k, long long mod) {
-    if (k == 0) {
-        return 1;
-    }
+    if (k == 0)    return 1;
 
     if (k % 2 == 0) {
         // If k is even, A^k = (A^(k/2))^2 mod mod
