@@ -36,11 +36,15 @@ int bottom_up(int n, vector<int> &prices){
             dp[i] = max(dp[i], prices[j - 1] + dp[i - j]);
         }
     }
+	
     return dp[n];
 }
 
 void cutRod(int price[], int n) {
+
     memset(dp, -1, sizeof(dp));
+
+
     vector<int> prices(price, price + n);
 
 // Calculate results for all three functions
@@ -69,8 +73,9 @@ void cutRod(int price[], int n) {
 int main(){
 	int n;
 	cin >> n;
-	int files[] = {1,5,8,9,10,17,17,20,24,30};
-
+	int files[n];
+	for (int i = 0; i < n; ++i) cin >> files[i];
+	
 	cutRod(files,n);
 
 	return 0;

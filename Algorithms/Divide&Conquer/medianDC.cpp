@@ -1,55 +1,65 @@
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int partition(vector<int>& arr, int left, int right) {
-    // Choose a random pivot and move it to the rightmost position
-    int randomIndex = left + rand() % (right - left + 1);
-    swap(arr[randomIndex], arr[right]);
+int partition(vector<int>& arr, int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
 
-    int pivot = arr[right];
-    int i = left - 1;
-
-    for (int j = left; j < right; j++) {
+    for (int j = low; j < high; j++) {
         if (arr[j] <= pivot) {
             i++;
             swap(arr[i], arr[j]);
         }
     }
-
-    swap(arr[i + 1], arr[right]);
+    swap(arr[i + 1], arr[high]);
     return i + 1;
 }
 
-int randomizedSelect(vector<int>& arr, int left, int right, int k) {
-    if (left == right)    return arr[left];
+// Find the k-th smallest element using QuickSelect
+int quickSelect(vector<int>& arr, int low, int high, int k) {
+    if (low == high)    return arr[low];
 
-    int pivotIndex = partition(arr, left, right);
-    int pivotRank = pivotIndex - left + 1;
+    int pivotIndex = partition(arr, low, high);
 
-    if (k == pivotRank)
-        return arr[pivotIndex];
-    else if (k < pivotRank)
-        return randomizedSelect(arr, left, pivotIndex - 1, k);
-    else
-        return randomizedSelect(arr, pivotIndex + 1, right, k - pivotRank);
+    if (k == pivotIndex) {
+        return arr[k];
+    } else if (k < pivotIndex) {
+        return quickSelect(arr, low, pivotIndex - 1, k);
+    } else {
+        return quickSelect(arr, pivotIndex + 1, high, k);
+    }
 }
 
-int findMedian(vector<int>& arr) {
-    int n = arr.size();
-    int k = (n + 1) / 2; // Median is the (n/2 + 1)th smallest element
+// Main function to find the median (or k-th smallest element)
+int findMedian(vector<int>& arr, int k) {
+    if (k < 0 || k >= arr.size()) {
+        throw runtime_error("Invalid value of k");
+    }
 
-    return randomizedSelect(arr, 0, n - 1, k);
+    return quickSelect(arr, 0, arr.size() - 1, k);
 }
 
 int main() {
     vector<int> arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
-    int median = findMedian(arr);
 
-    cout << "The median is: " << median << endl;
+    int n=6;
+    // cout << "Enter the number of elements: ";
+    // cin >> n;
+
+    // cout << "Enter the elements: ";
+    // for (int i = 0; i < n; i++) {
+    //     int num;
+    //     cin >> num;
+    //     arr.push_back(num);
+    // }
+
+    int k=0;
+    // cout << "Enter the value of k (k-th smallest element): ";
+    // cin >> k;
+
+    int median = findMedian(arr, k);
+
+    cout << "The " << k << "-th smallest element is: " << median << std::endl;
 
     return 0;
 }
